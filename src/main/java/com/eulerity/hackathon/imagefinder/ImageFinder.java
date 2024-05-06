@@ -1,6 +1,7 @@
 package com.eulerity.hackathon.imagefinder;
 
 import java.io.IOException;
+import java.util.HashSet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,11 @@ public class ImageFinder extends HttpServlet{
 		String path = req.getServletPath();
 		String url = req.getParameter("url");
 		System.out.println("Got request of:" + path + " with query param:" + url);
+		Scrapper sc = new Scrapper(url);
+		HashSet<String> links = sc.getLinks();
+		System.out.println(links);
+		System.out.println();
+		System.out.println(sc.linksWithSameDomain(links));
 		resp.getWriter().print(GSON.toJson(testImages));
 	}
 }
