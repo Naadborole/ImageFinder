@@ -1,7 +1,6 @@
 package com.eulerity.hackathon.imagefinder;
 
 import org.jsoup.Jsoup;
-import org.jsoup.helper.Validate;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -10,14 +9,14 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
-import java.util.Objects;
 
-public class Scrapper {
+public class Crawler {
     private Document doc;
-    Scrapper(String url) throws IOException {
+    Crawler(String url) throws IOException {
         doc = Jsoup.connect(url).get();
     }
 
+    //Extract links inside <img> tags
     HashSet<String> getImages(){
         HashSet<String> images = new HashSet<String>();
         Elements imgs = doc.select("img");

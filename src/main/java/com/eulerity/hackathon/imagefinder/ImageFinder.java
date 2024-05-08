@@ -35,9 +35,11 @@ public class ImageFinder extends HttpServlet{
 		String path = req.getServletPath();
 		String url = req.getParameter("url");
 		System.out.println("Got request of:" + path + " with query param:" + url);
-		SharedResources sr = new SharedResources();
-		ParallelCrawler pl = new ParallelCrawler(url, sr);
-		sr.pool.submit(pl);
-		resp.getWriter().print(GSON.toJson(testImages));
+		SharedResources sharedResources = new SharedResources();
+		ParallelCrawler parallelCrawler = new ParallelCrawler(url, sharedResources);
+		sharedResources.pool.submit(parallelCrawler);
+		List<String> imgs = sharedResources.getImages();
+		System.out.println(imgs);
+        resp.getWriter().print(GSON.toJson(imgs));
 	}
 }

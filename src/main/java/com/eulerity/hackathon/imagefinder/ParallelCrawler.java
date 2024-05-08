@@ -17,7 +17,7 @@ public class ParallelCrawler implements Runnable {
     public void run() {
         try {
             System.out.println("Thread called with: " + url);
-            Scrapper sc = new Scrapper(url);
+            Crawler sc = new Crawler(url);
             List<String> lnks = new ArrayList<String>(sc.linksWithSameDomain(sc.getLinks()));
             for (String lnk : lnks) {
                 if(!sharedResources.links.contains(lnk)){
