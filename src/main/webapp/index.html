@@ -1,77 +1,48 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<title>Hello, world!</title>
 </head>
 <body>
-	<h1>Eulerity Take-Home Challenge</h1>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
-	<h2>How it works</h2>
-	<ul>
-		<li>Pressing the submit button on this page will make a POST
-			request to /main</li>
-		<li>That request will contain a form parameter with the url
-			populated in the input box below</li>
-		<li>The ImageFinder servlet will respond to the request with a
-			list of image urls</li>
-		<li>This page contains javascript to send the request and use the
-			response to build a list of images</li>
-	</ul>
-	<h2>Backend Developers</h2>
-	<ul>
-		<li>You can update the ImageFinder servlet to add crawling logic</li>
-		<li>Feel free to add as many classes/packages/files/third party
-			libraries as you'd like</li>
-		<li>We recommend JSoup for parsing web pages</li>
-		<li>You can update this page's html/css/style if you plan on
-			improving the interface</li>
-		<li>Your final submission does not need to contain any of the
-			files included herein</li>
-		<li>This project is just skeleton code so you can hit the ground
-			running.</li>
-		<li>Some ideas:
-			<ul>
-			<li>Crawl not only the given url, but other pages in the same domain</li>
-			<li>Make your crawler multithreaded to speed up response times</li>
-			<li>Be a friendly crawler and try not to hammer a site</li>
-			<li>Think about how to identify different classes of images and do they need special handling</li>
-			<li>Can you identify images as logos? Perhaps collect favicons?</li>
-			<li>Can you mark images that contain people?</li>
-			</ul>
-		</li>
-	</ul>
-	<h2>Important Notes</h2>
-	<p>Congratulations on making it this far into the interview
-		process!</p>
-	<p>
-	This is a free-form hackathon for a very important reason. We wish to see what ideas you can bring to the table.
-	</p>
-	<p><strong>If your submission only contains 5-10 lines of new code, please think twice about submitting it.</strong> If you need more time, you can ask for it.
-	</p>
-	<p>
-	You can use one of the ideas above, but feel free to go off and build something completely different. 
-	The important thing is to submit something that highlights your strengths as a developer.
-	</p>
-	<p>
-	  <b>Remember, this is your chance to show off how you can best contribute to our team.</b>
-	</p>
-	<p>Please remember to think about good design and code style. Comments in your code are great, but thought should also be taken in how to name your variables and method.</p>
-
-
-
-	<div class="content">
-		<div class="input">
-			<form>
-				<input type="text" name="url">
-			</form>
-			<button type="button">Submit!</button>
-		</div>
-		<div class="output">
-			<ul class="results">
-
-			</ul>
+<nav class="navbar navbar-dark bg-dark">
+	<span class="navbar-brand mb-0 h1">ImageFinder</span>
+</nav>
+<div class="container-lg p-5 ">
+	<div class="content m-5">
+		<div class="input-group mb-3 input-group-lg w-50">
+			<input type="text" class="form-control" name="url" placeholder="URL" aria-label="URL" aria-describedby="button-addon2">
+			<button class="btn btn-outline-primary" type="button" id="button-addon2">Get</button>
 		</div>
 	</div>
+</div>
+<div class="output">
+	<h3>Logo</h3>
+	<ul class="resultsLogo">
+
+	</ul>
+</div>
+<div class="output">
+	<h3>Images</h3>
+	<ul class="resultsGeneral">
+
+	</ul>
+</div>
 	<script>
-		var resultList = document.querySelector('ul.results');
+		var resultListGeneral = document.querySelector('ul.resultsGeneral');
+		var resultListLogo = document.querySelector('ul.resultsLogo');
 		var urlInput = document.querySelector('input[name=url]')
 
 		apiCallBack = function(xhr, callback) {
@@ -91,12 +62,21 @@
 		}
 
 		updateList = function(response) {
-			resultList.innerHTML = '';
+			resultListGeneral.innerHTML = '';
+			resultListLogo.innerHTML = '';
 			for (var i = 0; i < response.length; i++) {
-				var img = document.createElement("img");
-				img.width = 200;
-				img.src = response[i];
-				resultList.appendChild(img);
+				if(response[i].type === "Logo"){
+					var img = document.createElement("img");
+					img.width = 200;
+					img.src = response[i].link;
+					resultListLogo.appendChild(img);
+				}
+				else {
+					var img = document.createElement("img");
+					img.width = 200;
+					img.src = response[i].link;
+					resultListGeneral.appendChild(img);
+				}
 			}
 		}
 
@@ -107,7 +87,7 @@
 			xhr.send(obj ? obj instanceof FormData || obj.constructor == String ? obj : JSON.stringify(obj) : null);
 		}
 
-		document.querySelector('button').addEventListener("click", function(event) {
+		document.querySelector('#button-addon2').addEventListener("click", function(event) {
 			event.preventDefault();
 			makeApiCall('/main?url=' + urlInput.value, 'POST', null, updateList);
 		});

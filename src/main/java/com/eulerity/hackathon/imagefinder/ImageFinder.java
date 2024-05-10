@@ -39,7 +39,7 @@ public class ImageFinder extends HttpServlet{
 		ParallelCrawler parallelCrawler = new ParallelCrawler(url, sharedResources);
 		sharedResources.pool.submit(parallelCrawler);
 		List<String> imgs = sharedResources.getImages();
-		System.out.println(imgs);
-        resp.getWriter().print(GSON.toJson(imgs));
+		System.out.println(sharedResources.getImagesAsJSON());
+        resp.getWriter().print(sharedResources.getImagesAsJSON());
 	}
 }

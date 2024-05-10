@@ -26,7 +26,15 @@ public class ParallelCrawler implements Runnable {
                 }
             }
             List<String> imgs = new ArrayList<String>(sc.getImages());
-            sharedResources.imgs.addAll(imgs);
+            for(String img : imgs){
+                sharedResources.imgs.put(img, "Image");
+            }
+            //Get the logos
+            List<String> logos = new ArrayList<String>(sc.getLogos());
+            for(String logo : logos){
+                sharedResources.imgs.put(logo, "Logo");
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

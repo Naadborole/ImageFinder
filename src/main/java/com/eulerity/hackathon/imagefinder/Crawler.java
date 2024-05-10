@@ -55,4 +55,29 @@ public class Crawler {
         }
         return lnks;
     }
+
+    HashSet<String> getLogos(){
+        HashSet<String> logos = new HashSet<String>();
+        // e1 is for logos of following type
+        // <head>
+        //    <link rel="icon" href="http://example.com/image.ico" />
+        //  </head>
+        //and
+        //<head>
+        //    <link rel="icon" href="http://example.com/image.png" />
+        //</head>
+        Elements e1=doc.head().select("link[href~=.*\\.(ico|png)]");
+        //e2 is for logos of the type
+        // <head>
+        //    <meta content="/images/google_favicon_128.png" itemprop="image" />
+        //</head>
+        Elements e2 = doc.head().select("meta[itemprop=image]");
+        for (Element lnk : e1) {
+            logos.add(lnk.attr("abs:href"));
+        }
+        for(Element lnk : e2){
+            logos.add(lnk.attr("abs:content"));
+        }
+        return logos;
+    }
 }
