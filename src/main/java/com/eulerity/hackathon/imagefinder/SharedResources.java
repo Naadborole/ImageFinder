@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.concurrent.*;
 import java.net.URL;
 
+//This class describes the resources which will be shared among all threads i.e.
+// all threads will access only one thread pool and image store (HashMap).
 public class SharedResources {
     ExecutorService pool;
     ConcurrentHashMap<String, String> imgs;
@@ -36,6 +38,8 @@ public class SharedResources {
     List<String> getImages() throws IOException {
         try {
             //Wait for 2 seconds to finish execution
+            //Can be changed to give the application more time to search for images.
+            //In case it is set to LONG_MAX it may run infinetly.
             if(!pool.awaitTermination(2,TimeUnit.SECONDS)){
                 pool.shutdown();
             }
@@ -52,7 +56,7 @@ public class SharedResources {
         return imList;
     }
 
-    //Get the images with the type of image as a JSOn Array
+    //Get the images with the type of image as a JSON Array
     JsonArray getImagesAsJSON(){
         JsonArray arr = new JsonArray(imgs.size());
         for (String imLink : imgs.keySet()) {

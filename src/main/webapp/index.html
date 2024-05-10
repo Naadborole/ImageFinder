@@ -10,7 +10,7 @@
 
 	<title>Hello, world!</title>
 </head>
-<body>
+<body onload="hideSections()">
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -28,13 +28,13 @@
 		</div>
 	</div>
 </div>
-<div class="output">
+<div class="output" id = "Logo">
 	<h3>Logo</h3>
 	<ul class="resultsLogo">
 
 	</ul>
 </div>
-<div class="output">
+<div class="output" id = "General">
 	<h3>Images</h3>
 	<ul class="resultsGeneral">
 
@@ -44,6 +44,13 @@
 		var resultListGeneral = document.querySelector('ul.resultsGeneral');
 		var resultListLogo = document.querySelector('ul.resultsLogo');
 		var urlInput = document.querySelector('input[name=url]')
+		var logo = document.querySelector("#Logo")
+		var general = document.querySelector("#General");
+
+		hideSections = function(){
+			general.style.visibility = "hidden";
+			logo.style.visibility = "hidden";
+		}
 
 		apiCallBack = function(xhr, callback) {
 			if (xhr.readyState == XMLHttpRequest.DONE) {
@@ -70,12 +77,19 @@
 					img.width = 200;
 					img.src = response[i].link;
 					resultListLogo.appendChild(img);
+					if(logo.style.visibility === "hidden"){
+						logo.style.visibility = "visible";
+					}
 				}
 				else {
 					var img = document.createElement("img");
 					img.width = 200;
 					img.src = response[i].link;
 					resultListGeneral.appendChild(img);
+					resultListGeneral.style.display = "block";
+					if(general.style.visibility === "hidden"){
+						general.style.visibility = "visible";
+					}
 				}
 			}
 		}

@@ -13,6 +13,7 @@ public class ParallelCrawler implements Runnable {
         this.sharedResources = sharedResources;
     }
 
+    //The thread recursively calls (schedules) thread for every sub link it finds in the same domain.
     @Override
     public void run() {
         try {

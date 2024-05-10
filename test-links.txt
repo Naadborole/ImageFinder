@@ -1,2 +1,5 @@
 Please paste your list of test URLs below:
 https://naadborole.github.io/TestWebsite/index.html
+https://www.google.com/webhp?hl=en&sa=X&ved=0ahUKEwj_mdfkjYSGAxXtJkQIHYPHA8oQPAgJ
+https://github.com/
+https://stackoverflow.com/
